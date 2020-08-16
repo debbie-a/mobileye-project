@@ -44,6 +44,9 @@ def find_tfl_lights(c_image: np.ndarray, **kwargs):
     # threshing image, all spot-lights turn white, the rest is black
     ret, thresh = cv2.threshold(blurred, 170, 255, cv2.THRESH_BINARY)
 
+    # TODO calculate max and min brightness and do thrashing according to that, so thrashing should be custom for
+    #  every image, and will work also on very dark or light images
+
     # just to visualize results...
     show_image_and_gt(thresh, None)
 
