@@ -1,6 +1,9 @@
-# Mobileye Project - Part 1
+# Mobileye Project
+
+## Part 1:
 
 ## Traffic Lights Attention - High success rates...
 
-Implementation of the function find_tfl_lights()  while finding the coveted kernel for the convolution.
+Detection of source lights in an image using convolution with customized
+high- and low-pass filters
 
