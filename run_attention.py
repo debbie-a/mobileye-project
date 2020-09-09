@@ -34,18 +34,19 @@ print("All imports okay. Yay!")
 
 
 def find_tfl_lights(c_image: np.ndarray, **kwargs):
-    green, red = c_image[:, :, 1], c_image[:, :, 2]
+    green, red = c_image[:, :, 1], c_image[:, :, 0]
 
-    kernel = np.array([
-        [-0.5, -0.5, -0.5],
-        [-0.5, -0.5, -0.5],
-        [-0.5, -0.5, -0.5],
-        [1, 1, -0.5],
-        [1, 2, 1],
-        [1, 1, 1],
-    ])
-    red_result = sg.convolve2d(red, kernel, mode='same')
-    green_result = sg.convolve2d(green, kernel, mode='same')
+    red_kernel = np.array(
+        [[-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5],
+         [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [1, 1, -0.5], [1, 2, 1],
+         [1, 2, 1], [1, 1, 1], [1, 1, 1]])
+    green_kernel = np.array(
+        [[1, 1, 1], [1, 1, 1], [1, 2, 1], [1, 2, 1], [1, 1, -0.5], [1, 1, -0.5], [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5],
+         [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5],
+         [-0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], ])
+
+    red_result = sg.convolve2d(red, red_kernel, mode='same')
+    green_result = sg.convolve2d(green, green_kernel, mode='same')
 
     max_red_dots = peak_local_max(red_result, min_distance=20, num_peaks=10)
     max_green_dots = peak_local_max(green_result, min_distance=20, num_peaks=10)
